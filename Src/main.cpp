@@ -1,5 +1,5 @@
 #include <iostream>
-#include <SDL\SDL.h>
+#include <SDL/SDL.h>
 #include "Window.h"
 
 int main(int argc, char* args[])
