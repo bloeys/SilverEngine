@@ -24,6 +24,12 @@ int main(int argc, char* args[])
 
 		if (Silver::Input::IsButtonPressed("Jump"))
 			std::cout << "Jumping!" << std::endl;
+		if (Silver::Input::IsMousePressed(1))
+			std::cout << "Mouse Left!" << std::endl;
+		if (Silver::Input::IsMouseHeld(2))
+			std::cout << "Mouse Middle!" << std::endl;
+		if (Silver::Input::IsMouseReleased(3))
+			std::cout << "Mouse Right!" << std::endl;
 	}
 	SDL_Quit();
 

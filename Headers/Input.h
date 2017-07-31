@@ -1,13 +1,40 @@
 #pragma once
 
-#include <unordered_map>
-#include <SDL/SDL_keycode.h>
 #include <vector>
 #include <string>
+#include <unordered_map>
+#include <SDL/SDL_keycode.h>
 
 namespace Silver {
 	class Input
 	{
+		struct MouseInfo
+		{
+			struct MouseBtnInfo
+			{
+				unsigned char clicks = 0;	//1 is normal click, 2 is double click
+				bool isPressed, pressedThisFrame,releasedThisFrame;
+			};
+
+			MouseBtnInfo *mouseBtns;
+			int x, y, prevX, prevY;
+
+			MouseInfo::MouseInfo()
+			{
+				mouseBtns = new MouseBtnInfo[5];
+				for (size_t i = 0; i < 5; i++)
+				{
+					MouseBtnInfo *mbi = new MouseBtnInfo();
+					mouseBtns[i] = *mbi;
+				}
+			}
+
+			MouseInfo::~MouseInfo()
+			{
+				delete[] mouseBtns;
+			}
+		};
+
 		struct KeyInfo
 		{
 			float secondsSinceRelease = 1;
@@ -24,13 +51,13 @@ namespace Silver {
 			{
 			}
 
-			Button::Button(const std::string &btnName, SDL_Keycode *requiredKeys, SDL_Keycode *newMods, size_t newKeyCount, size_t newModCount)
+			Button::Button(const std::string &btnName, const SDL_Keycode *requiredKeys, const SDL_Keycode *newMods, const size_t newKeyCount, const size_t newModCount)
 			{
 				name = btnName;
 				UpdateKeys(requiredKeys, newMods, newKeyCount, newModCount);
 			}
 
-			void Button::UpdateKeys(SDL_Keycode *newKeys, SDL_Keycode *newMods, size_t newKeyCount, size_t newModCount)
+			void Button::UpdateKeys(const SDL_Keycode *newKeys, const SDL_Keycode *newMods, const size_t newKeyCount, const size_t newModCount)
 			{
 				if (btnKeys != nullptr)
 					delete[] btnKeys;
@@ -66,6 +93,7 @@ namespace Silver {
 
 	private:
 		static size_t keysPressed;
+		static MouseInfo mouseInfo;
 		static std::vector<SDL_WindowEventID> windowEvents;
 		static std::unordered_map <SDL_Keycode, KeyInfo> keys;
 		static std::unordered_map <std::string, Button> buttons;
@@ -74,6 +102,7 @@ namespace Silver {
 	public:
 		static void Update();
 
+#pragma region Keys
 		static inline bool AnyKeyDown() { return keysPressed; }
 
 		//Returns Whether the key was pressed this frame
@@ -107,10 +136,12 @@ namespace Silver {
 				return true;
 			return !keys[key].isPressed;
 		}
+#pragma endregion
 
+#pragma region Btns
 		//Registers a named combination of keys that can be queried together.
 		//TRUE if the registration was successful. FALSE if there is a name collision with another button or keyCount is ZERO .
-		static bool RegisterButton(const std::string &btnName, SDL_Keycode* requiredKeys, SDL_Keycode* requiredMods, size_t keyCount, size_t modCount);
+		static bool RegisterButton(const std::string &btnName, const SDL_Keycode* requiredKeys, const SDL_Keycode* requiredMods, const size_t keyCount, const size_t modCount);
 
 		//Returns Whether the button was pressed this frame
 		static inline bool IsButtonPressed(const std::string &btnName)
@@ -176,9 +207,59 @@ namespace Silver {
 			return true;
 		}
 
-		static void UpdateButton(const std::string &btnName, SDL_Keycode* requiredKeys, SDL_Keycode* requiredMods, size_t keyCount, size_t modCount);
+		static void UpdateButton(const std::string &btnName, const SDL_Keycode* requiredKeys, const SDL_Keycode* requiredMods, const size_t keyCount, const size_t modCount);
 
 		static void DeleteButton(const std::string &btnName);
+#pragma endregion
+
+#pragma region Mouse
+		//From 0->4. 1: Left Mouse Btn. 2: Middle Mouse Btn. 3: Right Mouse Btn
+		static inline bool IsMousePressed(const unsigned char index)
+		{
+			if (index > 4)
+				return false;
+			return mouseInfo.mouseBtns[index].pressedThisFrame;
+		}
+
+		static inline bool IsMouseDoubleClicked(const unsigned char index)
+		{
+			if (index > 4)
+				return false;
+			return mouseInfo.mouseBtns[index].clicks == 2;
+		}
+
+		static inline bool IsMouseHeld(const unsigned char index)
+		{
+			if (index > 4)
+				return false;
+			return mouseInfo.mouseBtns[index].isPressed;
+		}
+
+		static inline bool IsMouseReleased(const unsigned char index)
+		{
+			if (index > 4)
+				return false;
+			return mouseInfo.mouseBtns[index].releasedThisFrame;
+		}
+
+		static inline bool IsMouseUp(const unsigned char index)
+		{
+			if (index > 4)
+				return false;
+			return !mouseInfo.mouseBtns[index].isPressed;
+		}
+		
+		//Current mouse X
+		static const inline int GetMouseX() { return mouseInfo.x; }
+		//Current mouse Y
+		static const inline int GetMouseY() { return mouseInfo.y; }
+		
+		//Last Mouse X
+		static const inline int GetPrevMouseX() { return mouseInfo.prevX; }
+		//Last Mouse Y
+		static const inline int GetPrevMouseY() { return mouseInfo.prevY; }
+#pragma endregion
+
 
 		static inline const std::vector<SDL_WindowEventID> &GetCurrentWindowEvents() { return windowEvents; }
 	};
