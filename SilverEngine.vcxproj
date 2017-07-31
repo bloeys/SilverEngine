@@ -125,12 +125,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Src\glew.c" />
+    <ClCompile Include="Src\GLMOutOverloads.cpp" />
     <ClCompile Include="Src\Input.cpp" />
     <ClCompile Include="Src\main.cpp" />
     <ClCompile Include="Src\Time.cpp" />
     <ClCompile Include="Src\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Headers\GLMOutOverloads.h" />
     <ClInclude Include="Headers\Input.h" />
     <ClInclude Include="Headers\Time.h" />
     <ClInclude Include="Headers\Window.h" />

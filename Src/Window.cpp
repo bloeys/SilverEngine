@@ -54,6 +54,9 @@ namespace Silver {
 		glVertex2f(0.5f, -0.5f);
 		glEnd();
 
+		if (Input::IsKeyPressed(SDLK_ESCAPE))
+			m_isClosed = true;
+
 		HandleWindowEvents();
 		SDL_GL_SwapWindow(m_window);	//Swap the back buffer
 	}
@@ -61,7 +64,7 @@ namespace Silver {
 	void Window::HandleWindowEvents()
 	{
 		std::vector<SDL_WindowEventID> events = Input::GetCurrentWindowEvents();
-		
+
 		for (size_t i = 0; i < events.size(); i++)
 		{
 			if (events[i] == SDL_WINDOWEVENT_RESIZED)
