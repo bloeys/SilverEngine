@@ -125,10 +125,12 @@
     <ClCompile Include="Src\glew.c" />
     <ClCompile Include="Src\Input.cpp" />
     <ClCompile Include="Src\main.cpp" />
+    <ClCompile Include="Src\Time.cpp" />
     <ClCompile Include="Src\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Headers\Input.h" />
+    <ClInclude Include="Headers\Time.h" />
     <ClInclude Include="Headers\Window.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

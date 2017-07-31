@@ -1,5 +1,6 @@
 #include <SDL/SDL.h>
 #include "Input.h"
+#include "Time.h"
 
 namespace Silver {
 
@@ -12,7 +13,11 @@ namespace Silver {
 	void Input::Update()
 	{
 		for (it = keys.begin(); it != keys.end(); it++)
-			it->second.pressedThisFrame = it->second.releasedThisFrame = false;
+		{
+			if (it->second.secondsSinceRelease <= 0.5)
+				it->second.secondsSinceRelease += Time::GetDt();
+			it->second.pressedThisFrame = false;
+		}
 
 		windowEvents.clear();
 
@@ -37,7 +42,7 @@ namespace Silver {
 			break;
 			case SDL_KEYUP:
 				if (keys[ev.key.keysym.sym].isPressed)
-					keys[ev.key.keysym.sym].releasedThisFrame = true;
+					keys[ev.key.keysym.sym].secondsSinceRelease = 0;
 
 				keys[ev.key.keysym.sym].isPressed = false;
 				keysPressed--;
@@ -49,22 +54,22 @@ namespace Silver {
 		}
 	}
 
-	bool Input::RegisterButton(const std::string &btnName, SDL_Keycode* requiredKeys, size_t keyCount)
+	bool Input::RegisterButton(const std::string &btnName, SDL_Keycode* requiredKeys, SDL_Keycode* requiredMods, size_t keyCount, size_t modCount)
 	{
-		if (buttons.find(btnName) != buttons.end())
+		if (keyCount == 0 || buttons.find(btnName) != buttons.end())
 			return false;
 
-		Button *b = new Button(btnName, requiredKeys, keyCount);
+		Button *b = new Button(btnName, requiredKeys, requiredMods, keyCount, modCount);
 		buttons[btnName] = *b;
 		return true;
 	}
 
-	void Input::UpdateButton(const std::string &btnName, SDL_Keycode* requiredKeys, size_t keyCount)
+	void Input::UpdateButton(const std::string &btnName, SDL_Keycode* requiredKeys, SDL_Keycode* requiredMods, size_t keyCount, size_t modCount)
 	{
 		if (buttons.find(btnName) == buttons.end())
 			return;
 
-		buttons[btnName].UpdateKeys(requiredKeys, keyCount);
+		buttons[btnName].UpdateKeys(requiredKeys, requiredMods, keyCount, modCount);
 	}
 
 	void Input::DeleteButton(const std::string &btnName)

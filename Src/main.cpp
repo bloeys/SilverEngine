@@ -2,6 +2,7 @@
 #include <SDL/SDL.h>
 #include "Window.h"
 #include "Input.h"
+#include "Time.h"
 
 int main(int argc, char* args[])
 {
@@ -9,13 +10,15 @@ int main(int argc, char* args[])
 	Silver::Window w("Silver Engine", 960, 540);	//16:9 aspect ratio
 
 	SDL_Keycode keys[] = { SDLK_SPACE };
-	Silver::Input::RegisterButton("Jump", keys, 1);
-	SDL_Keycode keys2[] = { SDLK_a};
-	Silver::Input::UpdateButton("Jump", keys2, 1);
+	SDL_Keycode mods[] = { SDLK_LCTRL };
+	Silver::Input::RegisterButton("Jump", keys, mods, 1, 1);
+
+	float dt = 16.0f / 1000.0f;
 
 	//Game loop
 	while (!w.Closed())
 	{
+		Silver::Time::Update();
 		Silver::Input::Update();
 		w.Update();
 

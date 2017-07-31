@@ -27,12 +27,18 @@
     <ClCompile Include="Src\Input.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Src\Time.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Headers\Window.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Headers\Input.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\Time.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

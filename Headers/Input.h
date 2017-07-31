@@ -10,40 +10,57 @@ namespace Silver {
 	{
 		struct KeyInfo
 		{
-			bool isPressed, pressedThisFrame, releasedThisFrame;
+			float secondsSinceRelease = 1;
+			bool isPressed, pressedThisFrame;
 		};
 
 		struct Button
 		{
 			std::string name;
-			SDL_Keycode* btnKeys = nullptr;
-			size_t keyCount;
+			SDL_Keycode *btnKeys = nullptr, *btnMods = nullptr;
+			size_t keyCount, modCount;
 
-			Button::Button() : name(""), btnKeys(nullptr), keyCount(0)
+			Button::Button() : name(""), btnKeys(nullptr), btnMods(nullptr), keyCount(0), modCount(0)
 			{
 			}
 
-			Button::Button(const std::string &btnName, SDL_Keycode *requiredKeys, size_t count)
+			Button::Button(const std::string &btnName, SDL_Keycode *requiredKeys, SDL_Keycode *newMods, size_t newKeyCount, size_t newModCount)
 			{
 				name = btnName;
-				keyCount = count;
-				UpdateKeys(requiredKeys, count);
+				UpdateKeys(requiredKeys, newMods, newKeyCount, newModCount);
 			}
 
-			void Button::UpdateKeys(SDL_Keycode *newKeys, size_t newCount)
+			void Button::UpdateKeys(SDL_Keycode *newKeys, SDL_Keycode *newMods, size_t newKeyCount, size_t newModCount)
 			{
 				if (btnKeys != nullptr)
 					delete[] btnKeys;
+				if (btnMods != nullptr)
+					delete[] btnMods;
 
-				btnKeys = new SDL_Keycode[newCount];
-				for (size_t i = 0; i < newCount; i++)
+				keyCount = newKeyCount;
+				modCount = newModCount;
+
+				btnKeys = new SDL_Keycode[newKeyCount];
+				for (size_t i = 0; i < newKeyCount; i++)
 					btnKeys[i] = newKeys[i];
+
+				if (modCount == 0)
+				{
+					btnMods = nullptr;
+					return;
+				}
+
+				btnMods = new SDL_Keycode[modCount];
+				for (size_t i = 0; i < newModCount; i++)
+					btnMods[i] = newMods[i];
 			}
 
 			Button::~Button()
 			{
 				if (btnKeys != nullptr)
 					delete[] btnKeys;
+				if (btnMods != nullptr)
+					delete[] btnMods;
 			}
 		};
 
@@ -80,7 +97,7 @@ namespace Silver {
 		{
 			if (keys.find(key) == keys.end())
 				return false;
-			return keys[key].releasedThisFrame;
+			return keys[key].secondsSinceRelease == 0;
 		}
 
 		//Returns Whether the key is not pressed
@@ -91,8 +108,9 @@ namespace Silver {
 			return !keys[key].isPressed;
 		}
 
-		//Registers a named combination of keys that can be queried together. Returns 'True' if the registration was successful, and false if there is a name collision with another button.
-		static bool RegisterButton(const std::string &btnName, SDL_Keycode* requiredKeys, size_t keyCount);
+		//Registers a named combination of keys that can be queried together.
+		//TRUE if the registration was successful. FALSE if there is a name collision with another button or keyCount is ZERO .
+		static bool RegisterButton(const std::string &btnName, SDL_Keycode* requiredKeys, SDL_Keycode* requiredMods, size_t keyCount, size_t modCount);
 
 		//Returns Whether the button was pressed this frame
 		static inline bool IsButtonPressed(const std::string &btnName)
@@ -102,6 +120,9 @@ namespace Silver {
 
 			for (size_t i = 0; i < buttons[btnName].keyCount; i++)
 				if (!IsKeyPressed(buttons[btnName].btnKeys[i]))
+					return false;
+			for (size_t i = 0; i < buttons[btnName].modCount; i++)
+				if (!IsKeyHeld(buttons[btnName].btnMods[i]))
 					return false;
 
 			return true;
@@ -116,6 +137,9 @@ namespace Silver {
 			for (size_t i = 0; i < buttons[btnName].keyCount; i++)
 				if (!IsKeyHeld(buttons[btnName].btnKeys[i]))
 					return false;
+			for (size_t i = 0; i < buttons[btnName].modCount; i++)
+				if (!IsKeyHeld(buttons[btnName].btnMods[i]))
+					return false;
 
 			return true;
 		}
@@ -128,6 +152,9 @@ namespace Silver {
 
 			for (size_t i = 0; i < buttons[btnName].keyCount; i++)
 				if (!IsKeyReleased(buttons[btnName].btnKeys[i]))
+					return false;
+			for (size_t i = 0; i < buttons[btnName].modCount; i++)
+				if (keys[buttons[btnName].btnMods[i]].secondsSinceRelease > 0.5f)
 					return false;
 
 			return true;
@@ -142,11 +169,14 @@ namespace Silver {
 			for (size_t i = 0; i < buttons[btnName].keyCount; i++)
 				if (!IsKeyUp(buttons[btnName].btnKeys[i]))
 					return false;
+			for (size_t i = 0; i < buttons[btnName].modCount; i++)
+				if (!IsKeyUp(buttons[btnName].btnMods[i]))
+					return false;
 
 			return true;
 		}
 
-		static void UpdateButton(const std::string &btnName, SDL_Keycode* requiredKeys, size_t keyCount);
+		static void UpdateButton(const std::string &btnName, SDL_Keycode* requiredKeys, SDL_Keycode* requiredMods, size_t keyCount, size_t modCount);
 
 		static void DeleteButton(const std::string &btnName);
 
