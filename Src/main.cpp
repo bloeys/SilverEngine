@@ -3,6 +3,7 @@
 #include "Window.h"
 #include "Input.h"
 #include "Time.h"
+#include "FileUtils.h"
 
 int main(int argc, char* args[])
 {
@@ -14,7 +15,7 @@ int main(int argc, char* args[])
 	Silver::Input::RegisterButton("Jump", keys, mods, 1, 1);
 
 	float dt = 16.0f / 1000.0f;
-	
+
 	//Game loop
 	while (!w.Closed())
 	{

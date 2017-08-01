@@ -124,6 +124,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Src\FileUtils.cpp" />
     <ClCompile Include="Src\glew.c" />
     <ClCompile Include="Src\GLMOutOverloads.cpp" />
     <ClCompile Include="Src\Input.cpp" />
@@ -132,6 +133,7 @@
     <ClCompile Include="Src\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Headers\FileUtils.h" />
     <ClInclude Include="Headers\GLMOutOverloads.h" />
     <ClInclude Include="Headers\Input.h" />
     <ClInclude Include="Headers\Time.h" />
