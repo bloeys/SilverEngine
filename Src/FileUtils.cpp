@@ -1,3 +1,4 @@
+#include <iostream>
 #include <fstream>
 #include "FileUtils.h"
 
@@ -6,7 +7,10 @@ namespace Silver {
 	{
 		std::ifstream fileStream(filepath, std::ios::ate);	//Start and directly go to eof
 		if (fileStream.fail())
+		{
+			std::cout << "File FAILED to open: " << filepath << std::endl;
 			return "";
+		}
 
 		std::string file;
 		file.resize(fileStream.tellg());	//Resize according to file size

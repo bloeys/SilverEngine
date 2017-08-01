@@ -129,6 +129,7 @@
     <ClCompile Include="Src\GLMOutOverloads.cpp" />
     <ClCompile Include="Src\Input.cpp" />
     <ClCompile Include="Src\main.cpp" />
+    <ClCompile Include="Src\Shader.cpp" />
     <ClCompile Include="Src\Time.cpp" />
     <ClCompile Include="Src\Window.cpp" />
   </ItemGroup>
@@ -138,6 +139,11 @@
     <ClInclude Include="Headers\Input.h" />
     <ClInclude Include="Headers\Time.h" />
     <ClInclude Include="Headers\Window.h" />
+    <ClInclude Include="Headers\Shader.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Shaders\Test.frag" />
+    <None Include="Shaders\Test.vert" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

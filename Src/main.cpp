@@ -3,8 +3,8 @@
 #include "Window.h"
 #include "Input.h"
 #include "Time.h"
-#include "FileUtils.h"
-
+#include "Shader.h"
+#include <GL/glew.h>
 int main(int argc, char* args[])
 {
 	SDL_Init(SDL_INIT_VIDEO);
@@ -15,12 +15,35 @@ int main(int argc, char* args[])
 	Silver::Input::RegisterButton("Jump", keys, mods, 1, 1);
 
 	float dt = 16.0f / 1000.0f;
+	float verts[] = {
+		-0.5f, -0.5f, 0.0f,
+		-0.5f,  0.5f, 0.0f,
+		 0.5f,  0.5f, 0.0f,
+
+		-0.5f, -0.5f, 0.0f,
+		 0.5f,  0.5f, 0.0f,
+		 0.5f, -0.5f, 0.0f
+	};
+
+	GLuint vbo;
+	glGenBuffers(1, &vbo);
+	glBindBuffer(GL_ARRAY_BUFFER, vbo);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(verts), verts, GL_STATIC_DRAW);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
+	glEnableVertexAttribArray(0);
+
+	Silver::Shader s(R"(c:\Users\omarm\Documents\Visual Studio 2017\Projects\C++\SilverEngine\SilverEngine\Shaders\Test.vert)",
+		R"(c:\Users\omarm\Documents\Visual Studio 2017\Projects\C++\SilverEngine\SilverEngine\Shaders\Test.frag)");
+	s.Enable();
 
 	//Game loop
 	while (!w.Closed())
 	{
 		Silver::Time::Update();
 		Silver::Input::Update();
+		
+		w.Clear();
+		glDrawArrays(GL_TRIANGLES, 0, 6);
 		w.Update();
 
 		if (Silver::Input::IsButtonPressed("Jump"))

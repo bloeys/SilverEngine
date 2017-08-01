@@ -36,6 +36,9 @@
     <ClCompile Include="Src\FileUtils.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Src\Shader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Headers\Window.h">
@@ -53,5 +56,12 @@
     <ClInclude Include="Headers\FileUtils.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Headers\Shader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Shaders\Test.vert" />
+    <None Include="Shaders\Test.frag" />
   </ItemGroup>
 </Project>

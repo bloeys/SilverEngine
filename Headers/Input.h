@@ -11,7 +11,7 @@ namespace Silver {
 			struct MouseBtnInfo
 			{
 				unsigned char clicks = 0;	//1 is normal click, 2 is double click
-				bool isPressed, pressedThisFrame,releasedThisFrame;
+				bool isPressed, pressedThisFrame, releasedThisFrame;
 			};
 
 			MouseBtnInfo *mouseBtns;
@@ -90,49 +90,49 @@ namespace Silver {
 		};
 
 	private:
-		static size_t m_keysPressed;
-		static MouseInfo m_mouseInfo;
-		static std::vector<SDL_WindowEventID> m_windowEvents;
-		static std::unordered_map <SDL_Keycode, KeyInfo> m_keys;
-		static std::unordered_map <std::string, Button> m_buttons;
-		static std::unordered_map <SDL_Keycode, KeyInfo>::iterator m_it;
+		static size_t keysPressed;
+		static MouseInfo mouseInfo;
+		static std::vector<SDL_WindowEventID> windowEvents;
+		static std::unordered_map <SDL_Keycode, KeyInfo> keys;
+		static std::unordered_map <std::string, Button> buttons;
+		static std::unordered_map <SDL_Keycode, KeyInfo>::iterator it;
 
 	public:
 		static void Update();
 
 #pragma region Keys
-		static inline bool AnyKeyDown() { return m_keysPressed; }
+		static inline bool AnyKeyDown() { return keysPressed; }
 
 		//Returns Whether the key was pressed this frame
 		static inline bool IsKeyPressed(SDL_Keycode key)
 		{
-			if (m_keys.find(key) == m_keys.end())
+			if (keys.find(key) == keys.end())
 				return false;
-			return m_keys[key].pressedThisFrame;
+			return keys[key].pressedThisFrame;
 		}
 
 		//Returns Whether the key is pressed
 		static inline bool IsKeyHeld(SDL_Keycode key)
 		{
-			if (m_keys.find(key) == m_keys.end())
+			if (keys.find(key) == keys.end())
 				return false;
-			return m_keys[key].isPressed;
+			return keys[key].isPressed;
 		}
 
 		//Returns Whether the key was released this frame
 		static inline bool IsKeyReleased(SDL_Keycode key)
 		{
-			if (m_keys.find(key) == m_keys.end())
+			if (keys.find(key) == keys.end())
 				return false;
-			return m_keys[key].secondsSinceRelease == 0;
+			return keys[key].secondsSinceRelease == 0;
 		}
 
 		//Returns Whether the key is not pressed
 		static inline bool IsKeyUp(SDL_Keycode key)
 		{
-			if (m_keys.find(key) == m_keys.end())
+			if (keys.find(key) == keys.end())
 				return true;
-			return !m_keys[key].isPressed;
+			return !keys[key].isPressed;
 		}
 #pragma endregion
 
@@ -144,14 +144,14 @@ namespace Silver {
 		//Returns Whether the button was pressed this frame
 		static inline bool IsButtonPressed(const std::string &btnName)
 		{
-			if (m_buttons.find(btnName) == m_buttons.end())
+			if (buttons.find(btnName) == buttons.end())
 				return false;
 
-			for (size_t i = 0; i < m_buttons[btnName].keyCount; i++)
-				if (!IsKeyPressed(m_buttons[btnName].btnKeys[i]))
+			for (size_t i = 0; i < buttons[btnName].keyCount; i++)
+				if (!IsKeyPressed(buttons[btnName].btnKeys[i]))
 					return false;
-			for (size_t i = 0; i < m_buttons[btnName].modCount; i++)
-				if (!IsKeyHeld(m_buttons[btnName].btnMods[i]))
+			for (size_t i = 0; i < buttons[btnName].modCount; i++)
+				if (!IsKeyHeld(buttons[btnName].btnMods[i]))
 					return false;
 
 			return true;
@@ -160,14 +160,14 @@ namespace Silver {
 		//Returns Whether the button is pressed
 		static inline bool IsButtonHeld(const std::string &btnName)
 		{
-			if (m_buttons.find(btnName) == m_buttons.end())
+			if (buttons.find(btnName) == buttons.end())
 				return false;
 
-			for (size_t i = 0; i < m_buttons[btnName].keyCount; i++)
-				if (!IsKeyHeld(m_buttons[btnName].btnKeys[i]))
+			for (size_t i = 0; i < buttons[btnName].keyCount; i++)
+				if (!IsKeyHeld(buttons[btnName].btnKeys[i]))
 					return false;
-			for (size_t i = 0; i < m_buttons[btnName].modCount; i++)
-				if (!IsKeyHeld(m_buttons[btnName].btnMods[i]))
+			for (size_t i = 0; i < buttons[btnName].modCount; i++)
+				if (!IsKeyHeld(buttons[btnName].btnMods[i]))
 					return false;
 
 			return true;
@@ -176,14 +176,14 @@ namespace Silver {
 		//Returns Whether the button was released this frame
 		static inline bool IsButtonReleased(const std::string &btnName)
 		{
-			if (m_buttons.find(btnName) == m_buttons.end())
+			if (buttons.find(btnName) == buttons.end())
 				return false;
 
-			for (size_t i = 0; i < m_buttons[btnName].keyCount; i++)
-				if (!IsKeyReleased(m_buttons[btnName].btnKeys[i]))
+			for (size_t i = 0; i < buttons[btnName].keyCount; i++)
+				if (!IsKeyReleased(buttons[btnName].btnKeys[i]))
 					return false;
-			for (size_t i = 0; i < m_buttons[btnName].modCount; i++)
-				if (m_keys[m_buttons[btnName].btnMods[i]].secondsSinceRelease > 0.5f)
+			for (size_t i = 0; i < buttons[btnName].modCount; i++)
+				if (keys[buttons[btnName].btnMods[i]].secondsSinceRelease > 0.5f)
 					return false;
 
 			return true;
@@ -192,14 +192,14 @@ namespace Silver {
 		//Returns Whether the button is not pressed
 		static inline bool IsButtonUp(const std::string &btnName)
 		{
-			if (m_buttons.find(btnName) == m_buttons.end())
+			if (buttons.find(btnName) == buttons.end())
 				return false;
 
-			for (size_t i = 0; i < m_buttons[btnName].keyCount; i++)
-				if (!IsKeyUp(m_buttons[btnName].btnKeys[i]))
+			for (size_t i = 0; i < buttons[btnName].keyCount; i++)
+				if (!IsKeyUp(buttons[btnName].btnKeys[i]))
 					return false;
-			for (size_t i = 0; i < m_buttons[btnName].modCount; i++)
-				if (!IsKeyUp(m_buttons[btnName].btnMods[i]))
+			for (size_t i = 0; i < buttons[btnName].modCount; i++)
+				if (!IsKeyUp(buttons[btnName].btnMods[i]))
 					return false;
 
 			return true;
@@ -216,49 +216,49 @@ namespace Silver {
 		{
 			if (index > 4)
 				return false;
-			return m_mouseInfo.mouseBtns[index].pressedThisFrame;
+			return mouseInfo.mouseBtns[index].pressedThisFrame;
 		}
 
 		static inline bool IsMouseDoubleClicked(const unsigned char index)
 		{
 			if (index > 4)
 				return false;
-			return m_mouseInfo.mouseBtns[index].clicks == 2;
+			return mouseInfo.mouseBtns[index].clicks == 2;
 		}
 
 		static inline bool IsMouseHeld(const unsigned char index)
 		{
 			if (index > 4)
 				return false;
-			return m_mouseInfo.mouseBtns[index].isPressed;
+			return mouseInfo.mouseBtns[index].isPressed;
 		}
 
 		static inline bool IsMouseReleased(const unsigned char index)
 		{
 			if (index > 4)
 				return false;
-			return m_mouseInfo.mouseBtns[index].releasedThisFrame;
+			return mouseInfo.mouseBtns[index].releasedThisFrame;
 		}
 
 		static inline bool IsMouseUp(const unsigned char index)
 		{
 			if (index > 4)
 				return false;
-			return !m_mouseInfo.mouseBtns[index].isPressed;
+			return !mouseInfo.mouseBtns[index].isPressed;
 		}
-		
+
 		//Current mouse X
-		static const inline int GetMouseX() { return m_mouseInfo.x; }
+		static const inline int GetMouseX() { return mouseInfo.x; }
 		//Current mouse Y
-		static const inline int GetMouseY() { return m_mouseInfo.y; }
-		
+		static const inline int GetMouseY() { return mouseInfo.y; }
+
 		//Last Mouse X
-		static const inline int GetPrevMouseX() { return m_mouseInfo.prevX; }
+		static const inline int GetPrevMouseX() { return mouseInfo.prevX; }
 		//Last Mouse Y
-		static const inline int GetPrevMouseY() { return m_mouseInfo.prevY; }
+		static const inline int GetPrevMouseY() { return mouseInfo.prevY; }
 #pragma endregion
 
 
-		static inline const std::vector<SDL_WindowEventID> &GetCurrentWindowEvents() { return m_windowEvents; }
+		static inline const std::vector<SDL_WindowEventID> &GetCurrentWindowEvents() { return windowEvents; }
 	};
 }

@@ -6,21 +6,22 @@ namespace Silver {
 	class Window
 	{
 	private:
-		SDL_Window* m_window;
-		bool m_isClosed;
-		int m_width, m_height;
-		const char* m_title;
+		SDL_Window* window;
+		bool isClosed;
+		int width, height;
+		const char* title;
 
 	private:
 		void Init();
 		void HandleWindowEvents();
 
 	public:
-		Window(const char* title, const int width, const int height);
+		Window(const char* windowTitle, const int windowWidth, const int windowHeight);
+		void Clear() const;
 		void Update();
-		inline bool Closed() const { return m_isClosed; }
-		inline int GetWidth() const { return m_width; }
-		inline int GetHeight() const { return m_height; }
+		inline bool Closed() const { return isClosed; }
+		inline int GetWidth() const { return width; }
+		inline int GetHeight() const { return height; }
 		~Window();
 	};
 }
