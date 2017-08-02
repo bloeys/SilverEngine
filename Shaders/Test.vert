@@ -8,5 +8,5 @@ uniform mat4 modelMat = mat4(1.0);
 
 void main()
 {
-	gl_Position = pos;
+	gl_Position = projectionMat * viewMat * modelMat * pos;
 }

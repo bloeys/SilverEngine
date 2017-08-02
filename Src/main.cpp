@@ -4,7 +4,10 @@
 #include "Input.h"
 #include "Time.h"
 #include "Shader.h"
+
 #include <GL/glew.h>
+#include <glm/gtc/matrix_transform.hpp>
+
 int main(int argc, char* args[])
 {
 	SDL_Init(SDL_INIT_VIDEO);
@@ -16,13 +19,13 @@ int main(int argc, char* args[])
 
 	float dt = 16.0f / 1000.0f;
 	float verts[] = {
-		-0.5f, -0.5f, 0.0f,
-		-0.5f,  0.5f, 0.0f,
-		 0.5f,  0.5f, 0.0f,
+		-10.0f, -1.0f, -0.0f,
+		-10.0f,  1.0f, -0.0f,
+		 10.0f,  1.0f,  -0.0f,
 
-		-0.5f, -0.5f, 0.0f,
-		 0.5f,  0.5f, 0.0f,
-		 0.5f, -0.5f, 0.0f
+		-10.0f, -1.0f, -0.0f,
+		 10.0f,  1.0f,  -0.0f,
+		 10.0f, -1.0f,  -0.0f
 	};
 
 	GLuint vbo;
@@ -35,13 +38,17 @@ int main(int argc, char* args[])
 	Silver::Shader s(R"(c:\Users\omarm\Documents\Visual Studio 2017\Projects\C++\SilverEngine\SilverEngine\Shaders\Test.vert)",
 		R"(c:\Users\omarm\Documents\Visual Studio 2017\Projects\C++\SilverEngine\SilverEngine\Shaders\Test.frag)");
 	s.Enable();
+	s.AddUniform("projectionMat");
+	s.AddUniform("modelMat");
+	s.SetUniform("projectionMat", glm::ortho(-10.0f, 10.0f, -10.0f, 10.0f, 1.0f, -1.0f));
+	s.SetUniform("modelMat", glm::rotate(glm::mat4(1), 45.0f, glm::vec3(0, 0, -1)));
 
 	//Game loop
 	while (!w.Closed())
 	{
 		Silver::Time::Update();
 		Silver::Input::Update();
-		
+
 		w.Clear();
 		glDrawArrays(GL_TRIANGLES, 0, 6);
 		w.Update();
