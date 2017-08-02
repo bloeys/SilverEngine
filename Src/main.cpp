@@ -3,14 +3,11 @@
 #include "Window.h"
 #include "Input.h"
 #include "Time.h"
-#include "Shader.h"
 
 #include <GL/glew.h>
 #include <glm/gtc/matrix_transform.hpp>
-#include "FloatBuffer.h"
-#include "IndexBuffer.h"
-#include "VertexArray.h"
-
+#include "Renderer2D.h"
+#include "GLMOutOverloads.h"
 int main(int argc, char* args[])
 {
 	using namespace Silver;
@@ -24,41 +21,6 @@ int main(int argc, char* args[])
 
 	float dt = 16.0f / 1000.0f;
 
-	float verts[] =
-	{
-		-10.0f, -1.0f,  -0.0f,
-		-10.0f,  1.0f,  -0.0f,
-		 10.0f,  1.0f,  -0.0f,
-		 10.0f, -1.0f,  -0.0f
-	};
-
-	GLushort indices[] = { 0, 1, 2, 0, 2, 3 };
-
-	GLfloat colors1[] =
-	{
-		0, 0, 0, 1,
-		1, 0, 0, 1,
-		1, 1, 0, 1,
-		1, 1, 1, 1
-	};
-
-	GLfloat colors2[] =
-	{
-		1, 1, 1, 1,
-		0, 1, 1, 1,
-		0, 0, 1, 1,
-		0, 0, 0, 1
-	};
-
-	IndexBuffer ibo(indices, 6);
-	VertexArray vao1, vao2;
-
-	vao1.AddFloatBuffer(new FloatBuffer(verts, 4 * 3, 3), 0);
-	vao1.AddFloatBuffer(new FloatBuffer(colors1, 4 * 4, 4), 1);
-
-	vao2.AddFloatBuffer(new FloatBuffer(verts, 4 * 3, 3), 0);
-	vao2.AddFloatBuffer(new FloatBuffer(colors2, 4 * 4, 4), 1);
-
 	Shader s(R"(c:\Users\omarm\Documents\Visual Studio 2017\Projects\C++\SilverEngine\SilverEngine\Shaders\Test.vert)",
 		R"(c:\Users\omarm\Documents\Visual Studio 2017\Projects\C++\SilverEngine\SilverEngine\Shaders\Test.frag)");
 	s.Enable();
@@ -66,28 +28,19 @@ int main(int argc, char* args[])
 	s.AddUniform("modelMat");
 	s.SetUniform("projectionMat", glm::ortho(-10.0f, 10.0f, -10.0f, 10.0f, 1.0f, -1.0f));
 
+	Renderable2D sprite1(glm::vec3(0, 8, 0), glm::vec2(2, 2), s), sprite2(glm::vec3(5, 5, 0), glm::vec2(2, 2), glm::vec4(1,0,0,1), s);
+	Renderer2D renderer;
+
 	//Game loop
 	while (!w.Closed())
 	{
 		Time::Update();
 		Input::Update();
-
+		
 		w.Clear();
-
-		vao1.Bind();
-		ibo.Bind();
-		s.SetUniform("modelMat", glm::rotate(glm::mat4(1), 0.0f, glm::vec3(0, 0, -1)));
-		glDrawElements(GL_TRIANGLES, ibo.GetCount(), GL_UNSIGNED_SHORT, 0);
-		ibo.UnBind();
-		vao1.UnBind();
-
-		vao2.Bind();
-		ibo.Bind();
-		s.SetUniform("modelMat", glm::rotate(glm::mat4(1), 90.0f, glm::vec3(0, 0, -1)));
-		glDrawElements(GL_TRIANGLES, ibo.GetCount(), GL_UNSIGNED_SHORT, 0);
-		ibo.UnBind();
-		vao2.UnBind();
-
+		renderer.Draw(&sprite1);
+		renderer.Draw(&sprite2);
+		renderer.Flush();
 		w.Update();
 
 		if (Input::IsButtonPressed("Jump"))

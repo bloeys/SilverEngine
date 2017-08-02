@@ -15,7 +15,7 @@ namespace Silver {
 
 	void Window::Init()
 	{
-		//Gl settings
+		//SDL GL settings
 		SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
 		/*SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 4);
 		SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 5);*/
@@ -41,6 +41,9 @@ namespace Silver {
 		}
 
 		std::cout << "OpenGL: " << glGetString(GL_VERSION) << std::endl;
+		glEnable(GL_CULL_FACE);
+		glCullFace(GL_BACK);
+		glFrontFace(GL_CW);
 		glClearColor(0.3f, 0.7f, 0.3f, 1.0f);
 	}
 
