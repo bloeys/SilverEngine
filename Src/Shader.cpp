@@ -74,7 +74,7 @@ namespace Silver {
 	void Shader::AddUniform(const char* uniform)
 	{
 		GLint uniformLocation = glGetUniformLocation(shaderID, uniform);
-
+		
 		if (uniformLocation == GL_INVALID_INDEX)
 		{
 			std::cout << "Couldn't Find Uniform: " << uniform;

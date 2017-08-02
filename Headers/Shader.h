@@ -10,7 +10,7 @@ namespace Silver {
 	{
 	private:
 		GLuint shaderID = 0;
-		std::unordered_map<std::string, GLuint> uniforms;	//Store uniforms for quick access
+		std::unordered_map<std::string, GLuint> uniforms;
 		int attribCount;
 
 	private:
@@ -18,7 +18,7 @@ namespace Silver {
 	
 	public:
 		Shader(const char* vertFilePath, const char* fragFilePath);
-		void AddUniform(const char* uniform);	//Adds uniforms(After linking
+		void AddUniform(const char* uniform);
 		void SetUniform(const char* uniform, const GLint i);
 		void SetUniform(const char* uniform, const GLfloat f);
 		void SetUniform(const char* uniform, const GLdouble d);
