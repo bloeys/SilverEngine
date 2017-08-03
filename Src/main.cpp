@@ -3,17 +3,22 @@
 #include "Window.h"
 #include "Input.h"
 #include "Time.h"
+#include "Shader.h"
 
 #include <GL/glew.h>
 #include <glm/gtc/matrix_transform.hpp>
 #include "Renderer2D.h"
+#include "StaticSprite.h"
 #include "GLMOutOverloads.h"
+#include "Sprite.h"
+
 int main(int argc, char* args[])
 {
 	using namespace Silver;
 
 	SDL_Init(SDL_INIT_VIDEO);
 	Window w("Silver Engine", 960, 540);	//16:9 aspect ratio
+	SDL_GL_SetSwapInterval(0);
 
 	SDL_Keycode keys[] = { SDLK_SPACE };
 	SDL_Keycode mods[] = { SDLK_LCTRL };
@@ -28,19 +33,44 @@ int main(int argc, char* args[])
 	s.AddUniform("modelMat");
 	s.SetUniform("projectionMat", glm::ortho(-10.0f, 10.0f, -10.0f, 10.0f, 1.0f, -1.0f));
 
-	Renderable2D sprite1(glm::vec3(0, 8, 0), glm::vec2(2, 2), s), sprite2(glm::vec3(5, 5, 0), glm::vec2(2, 2), glm::vec4(1,0,0,1), s);
 	Renderer2D renderer;
+	std::vector<Renderable2D*> sprites;
 
+	float ttt = 0.09f;
+	glm::vec2 ss = glm::vec2(ttt);
+	for (float i = -10; i < 10; i += ttt)
+		for (float j = -10; j < 10; j += ttt)
+			sprites.push_back(new Sprite(glm::vec3(i, j, 0), ss, glm::vec4(glm::abs((i + 10)) / 20.0f, glm::abs((j + 10)) / 20.0f, (glm::abs((i + 10)) / 20.0f + glm::abs((j + 10)) / 20.0f) / 2.0f, 1)));
+
+	float t = 0;
+	int f = 0;
 	//Game loop
 	while (!w.Closed())
 	{
 		Time::Update();
+		t += Time::GetDt();
+
+		if (t >= 1)
+		{
+			printf("FPS: %i\n", f);
+			t = 0;
+			f = 0;
+		}
+
+		else
+		{
+			f++;
+		}
+
 		Input::Update();
-		
 		w.Clear();
-		renderer.Draw(&sprite1);
-		renderer.Draw(&sprite2);
-		renderer.Flush();
+
+		renderer.BeginAdd();
+		for (size_t i = 0; i < sprites.size(); i++)
+			renderer.Add(sprites[i]);
+		renderer.EndAdd();
+
+		renderer.Draw();
 		w.Update();
 
 		if (Input::IsButtonPressed("Jump"))

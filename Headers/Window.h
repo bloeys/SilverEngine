@@ -19,7 +19,7 @@ namespace Silver {
 		Window(const char* windowTitle, const int windowWidth, const int windowHeight);
 		void Clear() const;
 		void Update();
-		inline bool Closed() const { return isClosed; }
+		inline const bool Closed() const { return isClosed; }
 		inline int GetWidth() const { return width; }
 		inline int GetHeight() const { return height; }
 		~Window();

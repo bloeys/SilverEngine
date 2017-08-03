@@ -29,6 +29,8 @@ namespace Silver {
 
 	VertexArray::~VertexArray()
 	{
+		glDeleteVertexArrays(1, &arrayID);
+
 		for (size_t i = 0; i < buffers.size(); i++)
 			delete buffers[i];
 	}

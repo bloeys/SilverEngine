@@ -9,9 +9,9 @@ namespace Silver {
 		GLuint bufferID, count;
 
 	public:
-		IndexBuffer(GLushort* indices, GLsizei indicesCount);
-		void Bind() const;
-		void UnBind() const;
+		IndexBuffer(GLuint* indices, GLsizei indicesCount);
+		inline void Bind() const { glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, bufferID); }
+		inline void UnBind() const { glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0); }
 		inline GLuint GetCount() const { return count; }
 		~IndexBuffer();
 	};

@@ -6,7 +6,7 @@ namespace Silver {
 	class Renderer2DBase
 	{
 	public:
-		virtual void Draw(const Renderable2D *r) = 0;
-		virtual void Flush() = 0;
+		virtual void Add(const Renderable2D *r) = 0;
+		virtual void Draw() = 0;
 	};
 }

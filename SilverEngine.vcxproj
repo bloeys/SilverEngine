@@ -109,6 +109,12 @@
       <SDLCheck>true</SDLCheck>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <AdditionalIncludeDirectories>C:\Users\omarm\Documents\Visual Studio 2017\Projects\C++\SilverEngine\SilverEngine\Headers;C:\Users\omarm\Documents\Visual Studio 2017\Projects\C++\SilverEngine\SilverEngine\Includes;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>GLEW_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
+      <FloatingPointModel>Fast</FloatingPointModel>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -132,7 +138,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Headers\Renderable2D.cpp" />
+    <ClCompile Include="Src\Renderable2D.cpp" />
     <ClCompile Include="Src\FloatBuffer.cpp" />
     <ClCompile Include="Src\FileUtils.cpp" />
     <ClCompile Include="Src\glew.c" />
@@ -142,9 +148,11 @@
     <ClCompile Include="Src\main.cpp" />
     <ClCompile Include="Src\Renderer2D.cpp" />
     <ClCompile Include="Src\Shader.cpp" />
+    <ClCompile Include="Src\Sprite.cpp" />
     <ClCompile Include="Src\Time.cpp" />
     <ClCompile Include="Src\VertexArray.cpp" />
     <ClCompile Include="Src\Window.cpp" />
+    <ClCompile Include="Src\StaticSprite.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Headers\Renderer2D.h" />
@@ -155,10 +163,13 @@
     <ClInclude Include="Headers\IndexBuffer.h" />
     <ClInclude Include="Headers\Input.h" />
     <ClInclude Include="Headers\Renderable2D.h" />
+    <ClInclude Include="Headers\Sprite.h" />
     <ClInclude Include="Headers\Time.h" />
+    <ClInclude Include="Headers\Vertex.h" />
     <ClInclude Include="Headers\VertexArray.h" />
     <ClInclude Include="Headers\Window.h" />
     <ClInclude Include="Headers\Shader.h" />
+    <ClInclude Include="Headers\StaticSprite.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Shaders\Test.frag" />

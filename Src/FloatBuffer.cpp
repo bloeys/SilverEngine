@@ -23,5 +23,6 @@ namespace Silver {
 
 	FloatBuffer::~FloatBuffer()
 	{
+		glDeleteBuffers(1, &bufferID);
 	}
 }

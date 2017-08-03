@@ -10,6 +10,7 @@ namespace Silver {
 	private:
 		GLuint arrayID;
 		std::vector<FloatBuffer*> buffers;
+
 	public:
 		VertexArray();
 		void AddFloatBuffer(FloatBuffer* buffer, GLuint layoutLocation);
