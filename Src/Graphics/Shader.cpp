@@ -2,7 +2,7 @@
 #include <iostream>
 #include <GL/glew.h>
 #include <glm/glm.hpp>
-#include "Shader.h"
+#include "Graphics/Shader.h"
 #include "FileUtils.h"
 
 namespace Silver {

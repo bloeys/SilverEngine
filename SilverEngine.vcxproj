@@ -138,38 +138,38 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Src\Renderable2D.cpp" />
-    <ClCompile Include="Src\FloatBuffer.cpp" />
+    <ClCompile Include="Src\Graphics\Renderable2D.cpp" />
+    <ClCompile Include="Src\Graphics\FloatBuffer.cpp" />
     <ClCompile Include="Src\FileUtils.cpp" />
-    <ClCompile Include="Src\glew.c" />
+    <ClCompile Include="Src\Graphics\glew.c" />
     <ClCompile Include="Src\GLMOutOverloads.cpp" />
-    <ClCompile Include="Src\IndexBuffer.cpp" />
+    <ClCompile Include="Src\Graphics\IndexBuffer.cpp" />
     <ClCompile Include="Src\Input.cpp" />
     <ClCompile Include="Src\main.cpp" />
-    <ClCompile Include="Src\Renderer2D.cpp" />
-    <ClCompile Include="Src\Shader.cpp" />
-    <ClCompile Include="Src\Sprite.cpp" />
+    <ClCompile Include="Src\Graphics\Renderer2D.cpp" />
+    <ClCompile Include="Src\Graphics\Shader.cpp" />
+    <ClCompile Include="Src\Graphics\Sprite.cpp" />
     <ClCompile Include="Src\Time.cpp" />
-    <ClCompile Include="Src\VertexArray.cpp" />
+    <ClCompile Include="Src\Graphics\VertexArray.cpp" />
     <ClCompile Include="Src\Window.cpp" />
-    <ClCompile Include="Src\StaticSprite.cpp" />
+    <ClCompile Include="Src\Graphics\StaticSprite.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Headers\Renderer2D.h" />
-    <ClInclude Include="Headers\Renderer2DBase.h" />
-    <ClInclude Include="Headers\FloatBuffer.h" />
+    <ClInclude Include="Headers\Graphics\Renderer2D.h" />
+    <ClInclude Include="Headers\Graphics\Renderer2DBase.h" />
+    <ClInclude Include="Headers\Graphics\FloatBuffer.h" />
     <ClInclude Include="Headers\FileUtils.h" />
     <ClInclude Include="Headers\GLMOutOverloads.h" />
-    <ClInclude Include="Headers\IndexBuffer.h" />
+    <ClInclude Include="Headers\Graphics\IndexBuffer.h" />
     <ClInclude Include="Headers\Input.h" />
-    <ClInclude Include="Headers\Renderable2D.h" />
-    <ClInclude Include="Headers\Sprite.h" />
+    <ClInclude Include="Headers\Graphics\Renderable2D.h" />
+    <ClInclude Include="Headers\Graphics\Sprite.h" />
     <ClInclude Include="Headers\Time.h" />
-    <ClInclude Include="Headers\Vertex.h" />
-    <ClInclude Include="Headers\VertexArray.h" />
+    <ClInclude Include="Headers\Graphics\Vertex.h" />
+    <ClInclude Include="Headers\Graphics\VertexArray.h" />
     <ClInclude Include="Headers\Window.h" />
-    <ClInclude Include="Headers\Shader.h" />
-    <ClInclude Include="Headers\StaticSprite.h" />
+    <ClInclude Include="Headers\Graphics\Shader.h" />
+    <ClInclude Include="Headers\Graphics\StaticSprite.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Shaders\Test.frag" />

@@ -1,4 +1,4 @@
-#include "IndexBuffer.h"
+#include "Graphics/IndexBuffer.h"
 
 namespace Silver {
 	IndexBuffer::IndexBuffer(GLuint* indices, GLsizei indicesCount)

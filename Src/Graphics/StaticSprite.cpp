@@ -1,4 +1,4 @@
-#include "StaticSprite.h"
+#include "Graphics/StaticSprite.h"
 
 namespace Silver {
 	StaticSprite::StaticSprite(float x, float y, float width, float height, float r, float g, float b, float a, Shader &shader)

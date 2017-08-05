@@ -1,5 +1,5 @@
 #include <glm/gtc/matrix_transform.hpp>
-#include "Renderer2D.h"
+#include "Graphics/Renderer2D.h"
 #include <cstddef>
 
 #define MAX_SPRITES 50000
@@ -30,7 +30,7 @@ namespace Silver {
 		glVertexAttribPointer(1, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(Vertex), (const GLvoid*)offsetof(Vertex, Vertex::color));
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 
-		//Generate indices array capable of handling the vertices for all the sprites(current max is 10K sprites)
+		//Generate indices array capable of handling the vertices for all the sprites
 		//MAX_SPRITES * 6 since each sprites needs 6 indices to be drawn
 		GLuint* indices = new GLuint[MAX_SPRITES * 6];
 		GLuint offset = 0;
@@ -57,9 +57,9 @@ namespace Silver {
 	void Renderer2D::Add(const Renderable2D *rend)
 	{
 		//Override the buffer with the data of the renderables sent to us
-		const glm::vec3 &p		=	rend->pos;
-		const glm::vec2 &s		=	rend->size;
-		const glm::vec4 &color	=	rend->color;
+		const glm::vec3 &p = rend->pos;
+		const glm::vec2 &s = rend->size;
+		const glm::vec4 &color = rend->color;
 
 		//Setting color takes too much time, so instead we send color as an uint packed with 4 bytes. int=32bits, byte=8bits, 
 		//so we can pack the 4 bytes of the color into a single uint reducing copying time significantly.(~100FPS boost!)
@@ -97,14 +97,17 @@ namespace Silver {
 		indexCount += 6;
 	}
 
-	void Renderer2D::EndAdd()
+	/*void Renderer2D::EndAdd()
 	{
 		glUnmapBuffer(GL_ARRAY_BUFFER);
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
-	}
+	}*/
 
 	void Renderer2D::Draw()
 	{
+		glUnmapBuffer(GL_ARRAY_BUFFER);
+		glBindBuffer(GL_ARRAY_BUFFER, 0);
+
 		glBindVertexArray(vaoID);
 		ibo->Bind();
 		glDrawElements(GL_TRIANGLES, indexCount, GL_UNSIGNED_INT, NULL);

@@ -15,9 +15,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Src\glew.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Src\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -36,28 +33,31 @@
     <ClCompile Include="Src\FileUtils.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Src\Shader.cpp">
+    <ClCompile Include="Src\Graphics\Renderable2D.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Src\FloatBuffer.cpp">
+    <ClCompile Include="Src\Graphics\Renderer2D.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Src\IndexBuffer.cpp">
+    <ClCompile Include="Src\Graphics\Shader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Src\VertexArray.cpp">
+    <ClCompile Include="Src\Graphics\Sprite.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Src\Renderer2D.cpp">
+    <ClCompile Include="Src\Graphics\StaticSprite.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Src\Renderable2D.cpp">
+    <ClCompile Include="Src\Graphics\VertexArray.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Src\Sprite.cpp">
+    <ClCompile Include="Src\Graphics\FloatBuffer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Src\StaticSprite.cpp">
+    <ClCompile Include="Src\Graphics\IndexBuffer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Graphics\glew.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -77,34 +77,34 @@
     <ClInclude Include="Headers\FileUtils.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Headers\Shader.h">
+    <ClInclude Include="Headers\Graphics\FloatBuffer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Headers\FloatBuffer.h">
+    <ClInclude Include="Headers\Graphics\IndexBuffer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Headers\IndexBuffer.h">
+    <ClInclude Include="Headers\Graphics\Renderable2D.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Headers\VertexArray.h">
+    <ClInclude Include="Headers\Graphics\Renderer2D.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Headers\Renderable2D.h">
+    <ClInclude Include="Headers\Graphics\Renderer2DBase.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Headers\Renderer2DBase.h">
+    <ClInclude Include="Headers\Graphics\Shader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Headers\Renderer2D.h">
+    <ClInclude Include="Headers\Graphics\Sprite.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Headers\Vertex.h">
+    <ClInclude Include="Headers\Graphics\StaticSprite.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Headers\Sprite.h">
+    <ClInclude Include="Headers\Graphics\VertexArray.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Headers\StaticSprite.h">
+    <ClInclude Include="Headers\Graphics\Vertex.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

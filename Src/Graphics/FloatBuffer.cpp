@@ -1,4 +1,4 @@
-#include <FloatBuffer.h>
+#include <Graphics/FloatBuffer.h>
 
 namespace Silver {
 	FloatBuffer::FloatBuffer(GLfloat* data, GLsizei dataCount, GLuint compCount)

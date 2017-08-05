@@ -1,4 +1,4 @@
-#include "Sprite.h"
+#include "Graphics/Sprite.h"
 
 namespace Silver {
 	Sprite::Sprite(float x, float y, float width, float height, float r, float g, float b, float a)

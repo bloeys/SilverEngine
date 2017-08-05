@@ -3,14 +3,14 @@
 #include "Window.h"
 #include "Input.h"
 #include "Time.h"
-#include "Shader.h"
+#include "Graphics/Shader.h"
 
 #include <GL/glew.h>
 #include <glm/gtc/matrix_transform.hpp>
-#include "Renderer2D.h"
-#include "StaticSprite.h"
+#include "Graphics/Renderer2D.h"
+#include "Graphics/StaticSprite.h"
 #include "GLMOutOverloads.h"
-#include "Sprite.h"
+#include "Graphics/Sprite.h"
 
 int main(int argc, char* args[])
 {
@@ -68,7 +68,7 @@ int main(int argc, char* args[])
 		renderer.BeginAdd();
 		for (size_t i = 0; i < sprites.size(); i++)
 			renderer.Add(sprites[i]);
-		renderer.EndAdd();
+		//renderer.EndAdd();
 
 		renderer.Draw();
 		w.Update();

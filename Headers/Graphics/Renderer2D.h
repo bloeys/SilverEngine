@@ -23,7 +23,7 @@ namespace Silver {
 		Renderer2D();
 		void BeginAdd();
 		void Add(const Renderable2D *r) override;
-		void EndAdd();
+		//void EndAdd();
 		void Draw() override;
 		~Renderer2D();
 	};
