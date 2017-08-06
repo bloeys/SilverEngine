@@ -21,10 +21,10 @@ namespace Silver {
 
 	public:
 		Renderer2D();
-		void BeginAdd();
+		void BeginAdd() override;
 		void Add(const Renderable2D *r) override;
 		//void EndAdd();
-		void Draw() override;
+		void Flush() override;
 		~Renderer2D();
 	};
 }

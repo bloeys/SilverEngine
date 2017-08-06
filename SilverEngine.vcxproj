@@ -138,6 +138,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Src\Graphics\LayerBase.cpp" />
+    <ClCompile Include="Src\Graphics\MainLayer2D.cpp" />
     <ClCompile Include="Src\Graphics\Renderable2D.cpp" />
     <ClCompile Include="Src\Graphics\FloatBuffer.cpp" />
     <ClCompile Include="Src\FileUtils.cpp" />
@@ -155,6 +157,8 @@
     <ClCompile Include="Src\Graphics\StaticSprite.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Headers\Graphics\LayerBase.h" />
+    <ClInclude Include="Headers\Graphics\MainLayer2D.h" />
     <ClInclude Include="Headers\Graphics\Renderer2D.h" />
     <ClInclude Include="Headers\Graphics\Renderer2DBase.h" />
     <ClInclude Include="Headers\Graphics\FloatBuffer.h" />

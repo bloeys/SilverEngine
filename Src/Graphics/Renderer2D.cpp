@@ -103,7 +103,7 @@ namespace Silver {
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 	}*/
 
-	void Renderer2D::Draw()
+	void Renderer2D::Flush()
 	{
 		glUnmapBuffer(GL_ARRAY_BUFFER);
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
